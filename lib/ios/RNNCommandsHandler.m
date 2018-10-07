@@ -68,12 +68,13 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 	[self assertReady];
 	
 	UIViewController<RNNLayoutProtocol>* vc = (UIViewController<RNNLayoutProtocol>*)[_store findComponentForId:componentId];
-	RNNNavigationOptions* options = [[RNNNavigationOptions alloc] initWithDict:mergeOptions];
+	RNNNavigationOptions* newOptions = [[RNNNavigationOptions alloc] initWithDict:mergeOptions];
 	if ([vc conformsToProtocol:@protocol(RNNLayoutProtocol)] || [vc isKindOfClass:[RNNRootViewController class]]) {
 		[CATransaction begin];
 		[CATransaction setCompletionBlock:completion];
-		
-		[vc.getLeafViewController mergeAndPresentOptions:options];
+
+		[vc.options mergeOptions:newOptions overrideOptions:YES];
+		[vc.presenter present:vc.options];
 		
 		[CATransaction commit];
 	}
