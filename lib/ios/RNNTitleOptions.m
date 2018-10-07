@@ -14,11 +14,6 @@
 	if (fontAttributes.allKeys.count > 0) {
 		viewController.navigationController.navigationBar.titleTextAttributes = fontAttributes;
 	}
-	
-	if (self.subtitle.text) {
-		RNNTitleViewHelper* titleViewHelper = [[RNNTitleViewHelper alloc] init:viewController title:self.text subtitle:self.subtitle.text titleImageData:nil isSetSubtitle:NO];
-		[titleViewHelper setup:self];
-	}
 }
 
 - (NSDictionary *)fontAttributes {

@@ -2,7 +2,7 @@
 #import "RNNBasePresenter.h"
 #import "RNNLeafProtocol.h"
 
-@protocol RNNLayoutProtocol <NSObject, UINavigationControllerDelegate, UIViewControllerTransitioningDelegate, UISplitViewControllerDelegate>
+@protocol RNNLayoutProtocol <RNNOptionsDelegate, NSObject, UINavigationControllerDelegate, UIViewControllerTransitioningDelegate, UISplitViewControllerDelegate>
 
 @required
 

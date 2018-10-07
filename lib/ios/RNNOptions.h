@@ -4,6 +4,13 @@
 
 @class RNNOptions;
 
+@protocol RNNOptionsDelegate <NSObject>
+
+@optional
+- (void)optionsDidUpdated;
+
+@end
+
 @protocol RNNOptionsProtocol <NSObject>
 
 @optional
@@ -17,6 +24,8 @@
 @end
 
 @interface RNNOptions : NSObject <RNNOptionsProtocol>
+
+@property (nonatomic, weak) id<RNNOptionsDelegate> delegate;
 
 - (instancetype)initWithDict:(NSDictionary*)dict;
 - (void)mergeWith:(NSDictionary*)otherOptions;

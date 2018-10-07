@@ -5,6 +5,7 @@
 #import "RNNPushAnimation.h"
 #import "RNNReactView.h"
 #import "RNNParentProtocol.h"
+#import "RNNTitleViewHelper.h"
 
 @interface RNNRootViewController() {
 	RNNReactView* _customTitleView;
@@ -29,6 +30,7 @@
 	self.presenter = presenter;
 	[self.presenter bindViewController:self];
 	self.options = options;
+	self.options.delegate = self;
 	
 	self.animator = [[RNNAnimator alloc] initWithTransitionOptions:self.options.customTransition];
 	
@@ -64,7 +66,7 @@
 	[super viewWillAppear:animated];
 	_isBeingPresented = YES;
 	[_presenter present:self.options];
-	[self initReactCustomViews];
+	[self initCustomViews];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -86,11 +88,8 @@
 	[_presenter present:self.options];
 }
 
-- (void)mergeAndPresentOptions:(RNNNavigationOptions *)newOptions {
-	[self.options mergeOptions:newOptions overrideOptions:YES];
-	[_presenter present:self.options];
-	
-	[self initReactCustomViews];
+- (void)optionsDidUpdated {
+	[self initCustomViews];
 }
 
 - (void)reactViewReady {
@@ -133,10 +132,16 @@
 	[self.eventEmitter sendOnSearchBarCancelPressed:self.layoutInfo.componentId];
 }
 
-- (void)initReactCustomViews {
+- (void)initCustomViews {
+	[self setTitleViewWithSubtitle];
 	[self setCustomNavigationTitleView];
 	[self setCustomNavigationBarView];
 	[self setCustomNavigationComponentBackground];
+}
+
+- (void)setTitleViewWithSubtitle {
+	RNNTitleViewHelper* titleViewHelper = [[RNNTitleViewHelper alloc] initWithTitleViewOptions:self.options.topBar.title viewController:self];
+	[titleViewHelper setup];
 }
 
 - (void)setCustomNavigationTitleView {

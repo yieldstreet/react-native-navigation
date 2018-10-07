@@ -14,30 +14,24 @@
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *subtitle;
-@property (nonatomic, strong) id titleImageData;
-@property (nonatomic) BOOL isSetSubtitle;
 
 @property (nonatomic, strong) RNNTitleView *titleView;
+@property (nonatomic, weak) RNNTitleOptions *titleOptions;
 
 @end
 
 
 @implementation RNNTitleViewHelper
 
-- (instancetype)init:(UIViewController*)viewController
-			   title:(NSString*)title subtitle:(NSString*)subtitle
-	  titleImageData:(id)titleImageData
-	   isSetSubtitle:(BOOL)isSetSubtitle {
+- (instancetype)initWithTitleViewOptions:(RNNTitleOptions*)titleOptions
+						  viewController:(UIViewController*)viewController {
 	self = [super init];
 	if (self) {
 		self.viewController = viewController;
-		if (isSetSubtitle){
-			self.title = viewController.navigationItem.title;
-		} else {
-			self.title = [RNNTitleViewHelper validateString:title];
-		}
-		self.subtitle = [RNNTitleViewHelper validateString:subtitle];
-		self.titleImageData = titleImageData;
+		self.title = titleOptions.text;
+		self.subtitle = titleOptions.subtitle.text;
+		self.titleOptions = titleOptions;
+		
 	}
 	return self;
 }
@@ -50,8 +44,7 @@
 	return string;
 }
 
--(void)setup:(RNNTitleOptions*)style {
-
+-(void)setup {
 	CGRect navigationBarBounds = self.viewController.navigationController.navigationBar.bounds;
 	
 	self.titleView = [[RNNTitleView alloc] initWithFrame:navigationBarBounds];
@@ -59,51 +52,18 @@
 	self.titleView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
 	self.titleView.clipsToBounds = YES;
 	
-	self.viewController.navigationItem.title = self.title;
-	
-	if ([self isTitleOnly]) {
-		self.viewController.navigationItem.titleView = nil;
-		return;
-	}
-	
-	if ([self isTitleImage]) {
-		[self setupTitleImage];
-		return;
-	}
-	
 	if (self.subtitle) {
-		self.titleView.subtitleLabel = [self setupSubtitle:style];
+		self.titleView.subtitleLabel = [self setupSubtitle];
 	}
 	
 	if (self.title) {
-		self.titleView.titleLabel = [self setupTitle:style];
+		self.titleView.titleLabel = [self setupTitle];
 	}
 	
 	[self centerTitleView:navigationBarBounds titleLabel:self.titleView.titleLabel subtitleLabel:self.titleView.subtitleLabel];
 	
 	self.viewController.navigationItem.titleView = self.titleView;
 }
-
-
--(BOOL)isTitleOnly {
-	return self.title && !self.subtitle && !self.titleImageData;
-}
-
-
--(BOOL)isTitleImage {
-	return self.titleImageData && ![self.titleImageData isEqual:[NSNull null]];
-}
-
-
--(void)setupTitleImage {
-	UIImage *titleImage = [RCTConvert UIImage:self.titleImageData];
-	UIImageView *imageView = [[UIImageView alloc] initWithImage:titleImage];
-	imageView.contentMode = UIViewContentModeScaleAspectFit;
-	imageView.autoresizingMask = self.titleView.autoresizingMask;
-	
-	self.viewController.navigationItem.titleView = imageView;
-}
-
 
 -(void)centerTitleView:(CGRect)navigationBarBounds titleLabel:(UILabel*)titleLabel subtitleLabel:(UILabel*)subtitleLabel
 {
@@ -121,7 +81,7 @@
 }
 
 
--(UILabel*)setupSubtitle:(RNNTitleOptions*)style {
+-(UILabel*)setupSubtitle {
 	CGRect subtitleFrame = self.titleView.frame;
 	subtitleFrame.size.height /= 2;
 	subtitleFrame.origin.y = subtitleFrame.size.height;
@@ -131,17 +91,17 @@
 	subtitleLabel.backgroundColor = [UIColor clearColor];
 	subtitleLabel.autoresizingMask = self.titleView.autoresizingMask;
 	
-	[subtitleLabel setAttributedText:[[NSAttributedString alloc] initWithString:self.subtitle attributes:style.subtitle.fontAttributes]];
+	[subtitleLabel setAttributedText:[[NSAttributedString alloc] initWithString:self.subtitle attributes:_titleOptions.subtitle.fontAttributes]];
 	
 	
-	CGSize labelSize = [subtitleLabel.text sizeWithAttributes:style.subtitle.fontAttributes];
+	CGSize labelSize = [subtitleLabel.text sizeWithAttributes:_titleOptions.subtitle.fontAttributes];
 	CGRect labelframe = subtitleLabel.frame;
 	labelframe.size = labelSize;
 	subtitleLabel.frame = labelframe;
 	[subtitleLabel sizeToFit];
 	
-	if (style.subtitle.color) {
-		UIColor *color = style.subtitle.color != (id)[NSNull null] ? [RCTConvert UIColor:style.subtitle.color] : nil;
+	if (_titleOptions.subtitle.color) {
+		UIColor *color = _titleOptions.subtitle.color != (id)[NSNull null] ? [RCTConvert UIColor:_titleOptions.subtitle.color] : nil;
 		subtitleLabel.textColor = color;
 	}
 	
@@ -151,7 +111,7 @@
 }
 
 
--(UILabel*)setupTitle:(RNNTitleOptions*)style {
+-(UILabel*)setupTitle {
 	CGRect titleFrame = self.titleView.frame;
 	if (self.subtitle) {
 		titleFrame.size.height /= 2;
@@ -164,13 +124,13 @@
 	
 	UIFont *titleFont = [UIFont boldSystemFontOfSize:17.f];
 	
-	id fontSize = style.fontSize;
+	id fontSize = _titleOptions.fontSize;
 	if (fontSize) {
 		CGFloat fontSizeFloat = [RCTConvert CGFloat:fontSize];
 		titleFont = [UIFont boldSystemFontOfSize:fontSizeFloat];
 	}
 	
-	[titleLabel setAttributedText:[[NSAttributedString alloc] initWithString:self.title attributes:style.fontAttributes]];
+	[titleLabel setAttributedText:[[NSAttributedString alloc] initWithString:self.title attributes:_titleOptions.fontAttributes]];
 	
 	CGSize labelSize = [titleLabel.text sizeWithAttributes:@{NSFontAttributeName:titleFont}];
 	CGRect labelframe = titleLabel.frame;
@@ -181,7 +141,7 @@
 		titleLabel.center = self.titleView.center;
 	}
 	
-	id navBarTextColor = style.color;
+	id navBarTextColor = _titleOptions.color;
 	if (navBarTextColor) {
 		UIColor *color = navBarTextColor != (id)[NSNull null] ? [RCTConvert UIColor:navBarTextColor] : nil;
 		titleLabel.textColor = color;

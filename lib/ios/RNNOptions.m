@@ -51,6 +51,10 @@
 			[self setValue:value forKey:prop];
 		}
 	}
+	
+	if ([self.delegate respondsToSelector:@selector(optionsDidUpdated)]) {
+		[self.delegate optionsDidUpdated];
+	}
 }
 
 - (void)mergeOptions:(RNNOptions *)otherOptions {
