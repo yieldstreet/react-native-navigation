@@ -27,6 +27,7 @@
 	self.creator = creator;
 	self.layoutInfo = layoutInfo;
 	self.presenter = presenter;
+	[self.presenter bindViewController:self];
 	self.options = options;
 	
 	self.animator = [[RNNAnimator alloc] initWithTransitionOptions:self.options.customTransition];
@@ -62,7 +63,7 @@
 -(void)viewWillAppear:(BOOL)animated{
 	[super viewWillAppear:animated];
 	_isBeingPresented = YES;
-	[_presenter present:self.options onViewControllerWillAppear:self];
+	[_presenter present:self.options];
 	[self initReactCustomViews];
 }
 
@@ -82,12 +83,12 @@
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {
-	[_presenter present:self.options onViewControllerDidLoad:self];
+	[_presenter present:self.options];
 }
 
 - (void)mergeAndPresentOptions:(RNNNavigationOptions *)newOptions {
 	[self.options mergeOptions:newOptions overrideOptions:YES];
-	[_presenter present:self.options onViewControllerWillAppear:self];
+	[_presenter present:self.options];
 	
 	[self initReactCustomViews];
 }

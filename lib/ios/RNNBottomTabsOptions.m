@@ -27,29 +27,32 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 		}
 	}
 	
+	[self resetOptions];
+}
+
+- (void)applyOnTabBarController:(UITabBarController *)tabBarController {
 	if (self.backgroundColor) {
-		viewController.tabBarController.tabBar.barTintColor = [RCTConvert UIColor:self.backgroundColor];
+		tabBarController.tabBar.barTintColor = [RCTConvert UIColor:self.backgroundColor];
 	} else {
-		viewController.tabBarController.tabBar.barTintColor = nil;
+		tabBarController.tabBar.barTintColor = nil;
 	}
 	
 	if (self.barStyle) {
-		viewController.tabBarController.tabBar.barStyle = [RCTConvert UIBarStyle:self.barStyle];
+		tabBarController.tabBar.barStyle = [RCTConvert UIBarStyle:self.barStyle];
 	} else {
-		viewController.tabBarController.tabBar.barStyle = UIBarStyleDefault;
+		tabBarController.tabBar.barStyle = UIBarStyleDefault;
 	}
-
+	
 	if (self.translucent) {
-		viewController.tabBarController.tabBar.translucent = [self.translucent boolValue];
+		tabBarController.tabBar.translucent = [self.translucent boolValue];
 	} else {
-		viewController.tabBarController.tabBar.translucent = NO;
+		tabBarController.tabBar.translucent = NO;
 	}
 	
 	if (self.hideShadow) {
-		viewController.tabBarController.tabBar.clipsToBounds = [self.hideShadow boolValue];
+		tabBarController.tabBar.clipsToBounds = [self.hideShadow boolValue];
 	}
 
-	[self resetOptions];
 }
 
 -(UIFont *)tabBarTextFont {

@@ -6,13 +6,17 @@
 @implementation RNNNavigationController
 
 - (instancetype)initWithLayoutInfo:(RNNLayoutInfo *)layoutInfo childViewControllers:(NSArray *)childViewControllers options:(RNNNavigationOptions *)options presenter:(RNNNavigationControllerPresenter *)presenter {
-	self = [super init];
+	UIViewController* rootViewController = childViewControllers.count ? childViewControllers[0] : nil;
+	self = [super initWithRootViewController:rootViewController];
 
 	self.presenter = presenter;
+	[self.presenter bindViewController:self];
 	self.options = options;
 	self.layoutInfo = layoutInfo;
 	
-	[self setViewControllers:childViewControllers];
+	if (childViewControllers.count > 1) {
+		[self setViewControllers:childViewControllers];
+	}
 	
 	return self;
 }
@@ -38,7 +42,7 @@
 		UIViewController *controller = self.viewControllers[self.viewControllers.count - 2];
 		if ([controller isKindOfClass:[RNNRootViewController class]]) {
 			RNNRootViewController *rnnController = (RNNRootViewController *)controller;
-			[rnnController.presenter present:rnnController.options onViewControllerDidLoad:rnnController];
+			[rnnController.presenter present:rnnController.options];
 		}
 	}
 	
@@ -62,7 +66,7 @@
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {
-	[_presenter present:self.options onViewControllerDidLoad:self];
+	[_presenter present:self.options];
 }
 
 

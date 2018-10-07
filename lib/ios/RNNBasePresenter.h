@@ -3,7 +3,10 @@
 
 @interface RNNBasePresenter : NSObject
 
-- (void)present:(RNNNavigationOptions *)options onViewControllerDidLoad:(UIViewController *)viewController;
-- (void)present:(RNNNavigationOptions *)options onViewControllerWillAppear:(UIViewController *)viewController;
+@property (nonatomic, weak) UIViewController* bindedViewController;
+
+- (void)bindViewController:(UIViewController *)bindedViewController;
+
+- (void)present:(RNNNavigationOptions *)options;
 
 @end

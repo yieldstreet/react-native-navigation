@@ -21,9 +21,16 @@
 	_vc2 = [[RNNRootViewController alloc] initWithLayoutInfo:nil rootViewCreator:nil eventEmitter:nil presenter:[[RNNViewControllerPresenter alloc] init] options:nil];
 	_vc3 = [UIViewController new];
 	
-	self.uut = [[RNNNavigationController alloc] initWithRootViewController:_vc1];
-	self.uut.options = [[RNNNavigationOptions alloc] initWithDict:@{}];
-	self.uut.presenter = [[RNNNavigationControllerPresenter alloc] init];;
+	self.uut = [[RNNNavigationController alloc] initWithLayoutInfo:nil childViewControllers:@[_vc1] options:[[RNNNavigationOptions alloc] initWithDict:@{}] presenter:[[RNNNavigationControllerPresenter alloc] init]];
+}
+
+- (void)testInitWithLayoutInfo_shouldBindPresenter {
+	XCTAssertNotNil(self.uut.presenter);
+}
+
+- (void)testInitWithLayoutInfo_shouldSetMultipleViewControllers {
+	self.uut = [[RNNNavigationController alloc] initWithLayoutInfo:nil childViewControllers:@[_vc1, _vc2] options:[[RNNNavigationOptions alloc] initWithDict:@{}] presenter:[[RNNNavigationControllerPresenter alloc] init]];
+	XCTAssertTrue(self.uut.viewControllers.count == 2);
 }
 
 - (void)testChildViewControllerForStatusBarStyle_shouldReturnTopViewController {
@@ -53,6 +60,8 @@
 	self.uut.options.popGesture = popGestureEnabled;
 	
 	[self.uut viewDidLoad];
+	[self.uut willMoveToParentViewController:nil];
+	
 	
 	XCTAssertTrue(self.uut.interactivePopGestureRecognizer.enabled);
 }

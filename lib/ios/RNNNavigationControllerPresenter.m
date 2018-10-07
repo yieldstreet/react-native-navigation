@@ -1,13 +1,14 @@
 #import "RNNNavigationControllerPresenter.h"
+#import "RNNNavigationController.h"
 
 @implementation RNNNavigationControllerPresenter
 
-- (void)present:(RNNNavigationOptions *)options onViewControllerDidLoad:(UINavigationController *)navigationController {
-	[options applyOnNavigationController:navigationController];
+
+- (void)present:(RNNNavigationOptions *)options {
+	UINavigationController* navigationControlelr = (UINavigationController *)self.bindedViewController;
+	[options applyOnNavigationController:navigationControlelr];
 }
 
-- (void)present:(RNNNavigationOptions *)options onViewControllerWillAppear:(UINavigationController *)navigationController {
-	[options applyOnNavigationController:navigationController];
-}
+
 
 @end

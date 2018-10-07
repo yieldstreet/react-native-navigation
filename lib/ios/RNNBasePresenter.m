@@ -2,12 +2,12 @@
 
 @implementation RNNBasePresenter
 
-- (void)present:(RNNNavigationOptions *)options onViewControllerWillAppear:(UIViewController *)viewController {
-	[options applyOn:viewController];
+- (void)bindViewController:(UIViewController *)bindedViewController {
+	_bindedViewController = bindedViewController;
 }
 
-- (void)present:(RNNNavigationOptions *)options onViewControllerDidLoad:(UIViewController *)viewController {
-	[options applyOn:viewController];
+- (void)present:(RNNNavigationOptions *)options {
+	[options applyOn:self.bindedViewController];
 }
 
 @end

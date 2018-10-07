@@ -25,6 +25,7 @@
 	self = [super init];
 	
 	self.presenter = presenter;
+	[self.presenter bindViewController:self];
 	self.options = options;
 	self.layoutInfo = layoutInfo;
 	
@@ -105,7 +106,7 @@
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {
-	[_presenter present:self.options onViewControllerDidLoad:self];
+	[_presenter present:self.options];
 }
 
 @end
