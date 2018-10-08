@@ -583,9 +583,7 @@
 
 
 - (RNNNavigationController *)createNavigationController {
-	RNNNavigationController* nav = [[RNNNavigationController alloc] initWithRootViewController:self.uut];
-	nav.options = [[RNNNavigationOptions alloc] initWithDict:@{}];
-	nav.presenter = [[RNNNavigationControllerPresenter alloc] init];
+	RNNNavigationController* nav = [[RNNNavigationController alloc] initWithLayoutInfo:nil childViewControllers:@[self.uut] options:[[RNNNavigationOptions alloc] initEmptyOptions] presenter:[[RNNNavigationControllerPresenter alloc] init]];
 	
 	return nav;
 }
