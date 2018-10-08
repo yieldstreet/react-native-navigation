@@ -43,7 +43,7 @@
 		UIViewController *controller = self.viewControllers[self.viewControllers.count - 2];
 		if ([controller isKindOfClass:[RNNRootViewController class]]) {
 			RNNRootViewController *rnnController = (RNNRootViewController *)controller;
-			[rnnController.presenter present:rnnController.options];
+			[rnnController.optionsResolver childWillAppearWithOptions:rnnController.options];
 		}
 	}
 	
