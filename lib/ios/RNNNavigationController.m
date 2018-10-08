@@ -13,6 +13,7 @@
 	[self.presenter bindViewController:self];
 	self.options = options;
 	self.layoutInfo = layoutInfo;
+	self.optionsResolver = [[RNNOptionsResolver alloc] initWithOptions:self.options presenter:self.presenter viewController:self];
 	
 	if (childViewControllers.count > 1) {
 		[self setViewControllers:childViewControllers];
@@ -64,10 +65,5 @@
 - (UIViewController *)childViewControllerForStatusBarStyle {
 	return self.topViewController;
 }
-
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-	[_presenter present:self.options];
-}
-
 
 @end

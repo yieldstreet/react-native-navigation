@@ -10,6 +10,7 @@
 #import "RNNLayoutInfo.h"
 #import "RNNOptionsManager.h"
 #import "RNNViewControllerPresenter.h"
+#import "RNNSideMenuPresenter.h"
 #import "RNNTabBarPresenter.h"
 #import "RNNRootViewController.h"
 
@@ -166,7 +167,7 @@
 - (UIViewController<RNNParentProtocol> *)createSideMenu:(RNNLayoutNode*)node {
 	RNNLayoutInfo* layoutInfo = [[RNNLayoutInfo alloc] initWithNode:node];
 	RNNNavigationOptions* options = [_optionsManager createOptions:node.data[@"options"]];
-	RNNBasePresenter* presenter = [[RNNBasePresenter alloc] init];
+	RNNSideMenuPresenter* presenter = [[RNNSideMenuPresenter alloc] init];
 
 	NSArray *childViewControllers = [self extractChildrenViewControllersFromNode:node];
 	

@@ -33,20 +33,14 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 - (void)applyOnTabBarController:(UITabBarController *)tabBarController {
 	if (self.backgroundColor) {
 		tabBarController.tabBar.barTintColor = [RCTConvert UIColor:self.backgroundColor];
-	} else {
-		tabBarController.tabBar.barTintColor = nil;
 	}
 	
 	if (self.barStyle) {
 		tabBarController.tabBar.barStyle = [RCTConvert UIBarStyle:self.barStyle];
-	} else {
-		tabBarController.tabBar.barStyle = UIBarStyleDefault;
 	}
 	
 	if (self.translucent) {
 		tabBarController.tabBar.translucent = [self.translucent boolValue];
-	} else {
-		tabBarController.tabBar.translucent = NO;
 	}
 	
 	if (self.hideShadow) {

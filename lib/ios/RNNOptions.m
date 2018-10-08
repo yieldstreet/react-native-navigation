@@ -12,6 +12,10 @@
 	return self;
 }
 
+- (instancetype)initEmptyOptions {
+	return [self initWithDict:@{}];
+}
+
 - (void)applyOn:(UIViewController *)viewController defaultOptions:(RNNOptions *)defaultOptions {
 	[defaultOptions applyOn:viewController];
 	[self applyOn:viewController];

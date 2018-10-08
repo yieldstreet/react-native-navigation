@@ -73,8 +73,7 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 		[CATransaction begin];
 		[CATransaction setCompletionBlock:completion];
 
-		[vc.presenter present:newOptions];
-		[vc.options mergeOptions:newOptions overrideOptions:YES];
+		[vc.optionsResolver mergeOptions:newOptions];
 
 		[CATransaction commit];
 	}

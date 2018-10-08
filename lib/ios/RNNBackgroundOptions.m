@@ -14,8 +14,6 @@ const NSInteger TOP_BAR_TRANSPARENT_TAG = 78264803;
 - (void)applyOnNavigationController:(UINavigationController *)navigationController {
 	if (self.translucent) {
 		navigationController.navigationBar.translucent = [self.translucent boolValue];
-	} else {
-		navigationController.navigationBar.translucent = NO;
 	}
 	
 	if ([self.blur boolValue]) {
@@ -79,8 +77,6 @@ const NSInteger TOP_BAR_TRANSPARENT_TAG = 78264803;
 
 	if (self.clipToBounds) {
 		navigationController.navigationBar.clipsToBounds = [self.clipToBounds boolValue];
-	} else {
-		navigationController.navigationBar.clipsToBounds = NO;
 	}
 }
 

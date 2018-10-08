@@ -8,4 +8,9 @@
 	[self.right applyOnSide:MMDrawerSideRight viewController:viewController];
 }
 
+- (void)resetOptions {
+	[self.left resetOptions];
+	[self.right resetOptions];
+}
+
 @end

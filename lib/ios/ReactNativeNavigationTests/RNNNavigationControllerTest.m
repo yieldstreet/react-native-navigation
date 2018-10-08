@@ -48,44 +48,50 @@
 
 - (void)testPopGestureEnabled_false {
 	NSNumber* popGestureEnabled = @(0);
-	self.uut.options.popGesture = popGestureEnabled;
+	RNNNavigationOptions* options = [[RNNNavigationOptions alloc] initEmptyOptions];
+	options.popGesture = popGestureEnabled;
 	
-	[self.uut willMoveToParentViewController:nil];
-
+	self.uut = [self createNavigationControllerWithOptions:options];
 	XCTAssertFalse(self.uut.interactivePopGestureRecognizer.enabled);
 }
 
 - (void)testPopGestureEnabled_true {
 	NSNumber* popGestureEnabled = @(1);
-	self.uut.options.popGesture = popGestureEnabled;
+	RNNNavigationOptions* options = [[RNNNavigationOptions alloc] initEmptyOptions];
+	options.popGesture = popGestureEnabled;
 	
-	[self.uut viewDidLoad];
-	[self.uut willMoveToParentViewController:nil];
-	
-	
+	self.uut = [self createNavigationControllerWithOptions:options];
 	XCTAssertTrue(self.uut.interactivePopGestureRecognizer.enabled);
 }
 
 - (void)testRootBackgroundImage {
 	UIImage* rootBackgroundImage = [[UIImage alloc] init];
-	self.uut.options.rootBackgroundImage = rootBackgroundImage;
-	[self.uut willMoveToParentViewController:nil];
+	RNNNavigationOptions* options = [[RNNNavigationOptions alloc] initEmptyOptions];
+	options.rootBackgroundImage = rootBackgroundImage;
+	
+	self.uut = [self createNavigationControllerWithOptions:options];
 	XCTAssertTrue([[(UIImageView*)self.uut.view.subviews[0] image] isEqual:rootBackgroundImage]);
 }
 
 - (void)testTopBarBackgroundClipToBounds_true {
-	self.uut.options.topBar.background.clipToBounds = @(1);
-	[self.uut willMoveToParentViewController:nil];
-
+	RNNNavigationOptions* options = [[RNNNavigationOptions alloc] initEmptyOptions];
+	options.topBar.background.clipToBounds = @(1);
+	
+	self.uut = [self createNavigationControllerWithOptions:options];
 	XCTAssertTrue(self.uut.navigationBar.clipsToBounds);
 }
 
 - (void)testTopBarBackgroundClipToBounds_false {
-	self.uut.options.topBar.background.clipToBounds = @(0);
-	[self.uut viewDidLoad];
-
+	RNNNavigationOptions* options = [[RNNNavigationOptions alloc] initEmptyOptions];
+	options.topBar.background.clipToBounds = @(0);
+	
+	self.uut = [self createNavigationControllerWithOptions:options];
+	
 	XCTAssertFalse(self.uut.navigationController.navigationBar.clipsToBounds);
 }
 
+- (RNNNavigationController *)createNavigationControllerWithOptions:(RNNNavigationOptions *)options {
+	return [[RNNNavigationController alloc] initWithLayoutInfo:nil childViewControllers:@[_vc1] options:options presenter:[[RNNNavigationControllerPresenter alloc] init]];
+}
 
 @end

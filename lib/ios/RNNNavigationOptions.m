@@ -11,34 +11,29 @@
 @implementation RNNNavigationOptions
 
 - (void)applyOn:(UIViewController *)viewController {
-	[self.topBar applyOn:viewController];
-	[self.bottomTabs applyOn:viewController];
-	[self.topTab applyOn:viewController];
-	[self.bottomTab applyOn:viewController];
-	[self.sideMenu applyOn:viewController];
-	[self.overlay applyOn:viewController];
-	[self.statusBar applyOn:viewController];
-	[self.layout applyOn:viewController];
+	if (self.backgroundImage) {
+		UIImageView* backgroundImageView = (viewController.view.subviews.count > 0) ? viewController.view.subviews[0] : nil;
+		if (![backgroundImageView isKindOfClass:[UIImageView class]]) {
+			backgroundImageView = [[UIImageView alloc] initWithFrame:viewController.view.bounds];
+			[viewController.view insertSubview:backgroundImageView atIndex:0];
+		}
+		
+		backgroundImageView.layer.masksToBounds = YES;
+		backgroundImageView.image = [self.backgroundImage isKindOfClass:[UIImage class]] ? (UIImage*)self.backgroundImage : [RCTConvert UIImage:self.backgroundImage];
+		[backgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
+	}
 	
-	[self applyOtherOptionsOn:viewController];
+	if (self.modalPresentationStyle) {
+		viewController.modalPresentationStyle = [RCTConvert UIModalPresentationStyle:self.modalPresentationStyle];
+		[viewController.view setBackgroundColor:[UIColor clearColor]];
+	}
 	
-	[self applyOnNavigationController:viewController.navigationController];
-	[self applyOnTabBarController:viewController.tabBarController];
+	if (self.modalTransitionStyle) {
+		viewController.modalTransitionStyle = [RCTConvert UIModalTransitionStyle:self.modalTransitionStyle];
+	}
 }
 
 - (void)applyOnNavigationController:(UINavigationController *)navigationController {
-	[self.topBar applyOnNavigationController:navigationController];
-	[self.statusBar applyOn:navigationController];
-	[self.layout applyOn:navigationController];
-	[self.bottomTab applyOn:navigationController];
-	[self applyOtherOptionsOnNavigationController:navigationController];
-}
-
-- (void)applyOnTabBarController:(UITabBarController *)tabBarController {
-	[self.bottomTabs applyOnTabBarController:tabBarController];
-}
-
-- (void)applyOtherOptionsOnNavigationController:(UINavigationController*)navigationController {
 	if (self.popGesture) {
 		navigationController.interactivePopGestureRecognizer.enabled = [self.popGesture boolValue];
 	}
@@ -56,26 +51,14 @@
 	}
 }
 
-- (void)applyOtherOptionsOn:(UIViewController*)viewController {
-	if (self.backgroundImage) {
-		UIImageView* backgroundImageView = (viewController.view.subviews.count > 0) ? viewController.view.subviews[0] : nil;
-		if (![backgroundImageView isKindOfClass:[UIImageView class]]) {
-			backgroundImageView = [[UIImageView alloc] initWithFrame:viewController.view.bounds];
-			[viewController.view insertSubview:backgroundImageView atIndex:0];
-		}
-		
-		backgroundImageView.layer.masksToBounds = YES;
-		backgroundImageView.image = [self.backgroundImage isKindOfClass:[UIImage class]] ? (UIImage*)self.backgroundImage : [RCTConvert UIImage:self.backgroundImage];
-		[backgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
-	}
+- (void)applyOnTabBarController:(UITabBarController *)tabBarController {
+	[self.bottomTabs applyOnTabBarController:tabBarController];
+}
 
-	if (self.modalPresentationStyle) {
-		viewController.modalPresentationStyle = [RCTConvert UIModalPresentationStyle:self.modalPresentationStyle];
-		[viewController.view setBackgroundColor:[UIColor clearColor]];
-	}
-	if (self.modalTransitionStyle) {
-		viewController.modalTransitionStyle = [RCTConvert UIModalTransitionStyle:self.modalTransitionStyle];
-	}
+- (void)resetOptions {
+	[self.sideMenu resetOptions];
+	[self.bottomTabs resetOptions];
+	[self.bottomTab resetOptions];
 }
 
 @end

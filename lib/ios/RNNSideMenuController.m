@@ -1,11 +1,3 @@
-//
-//  RNNSideMenuController.m
-//  ReactNativeNavigation
-//
-//  Created by Ran Greenberg on 09/02/2017.
-//  Copyright © 2017 Wix. All rights reserved.
-//
-
 #import "RNNSideMenuController.h"
 #import "RNNSideMenuChildVC.h"
 #import "MMDrawerController.h"
@@ -15,21 +7,25 @@
 @property (readwrite) RNNSideMenuChildVC *center;
 @property (readwrite) RNNSideMenuChildVC *left;
 @property (readwrite) RNNSideMenuChildVC *right;
-@property (readwrite) MMDrawerController *sideMenu;
 
 @end
 
 @implementation RNNSideMenuController
 
 - (instancetype)initWithLayoutInfo:(RNNLayoutInfo *)layoutInfo childViewControllers:(NSArray *)childViewControllers options:(RNNNavigationOptions *)options presenter:(RNNBasePresenter *)presenter {
-	self = [super init];
+	[self setControllers:childViewControllers];
+	self = [super initWithCenterViewController:self.center leftDrawerViewController:self.left rightDrawerViewController:self.right];
 	
 	self.presenter = presenter;
 	[self.presenter bindViewController:self];
+	
 	self.options = options;
 	self.layoutInfo = layoutInfo;
 	
-	[self bindChildViewControllers:childViewControllers];
+	self.openDrawerGestureModeMask = MMOpenDrawerGestureModeAll;
+	self.closeDrawerGestureModeMask = MMCloseDrawerGestureModeAll;
+	
+	self.optionsResolver = [[RNNOptionsResolver alloc] initWithOptions:self.options presenter:self.presenter viewController:self];
 	
 	// Fixes #3697
 	[self setExtendedLayoutIncludesOpaqueBars:YES];
@@ -38,26 +34,12 @@
 	return self;
 }
 
-- (void)bindChildViewControllers:(NSArray<UIViewController<RNNLayoutProtocol> *> *)viewControllers {
-	[self setControllers:viewControllers];
-	
-	self.sideMenu = [[MMDrawerController alloc] initWithCenterViewController:self.center leftDrawerViewController:self.left rightDrawerViewController:self.right];
-	
-	self.sideMenu.openDrawerGestureModeMask = MMOpenDrawerGestureModeAll;
-	self.sideMenu.closeDrawerGestureModeMask = MMCloseDrawerGestureModeAll;
-	
-	[self addChildViewController:self.sideMenu];
-	[self.sideMenu.view setFrame:self.view.bounds];
-	[self.view addSubview:self.sideMenu.view];
-	[self.view bringSubviewToFront:self.sideMenu.view];
-}
-
 -(void)showSideMenu:(MMDrawerSide)side animated:(BOOL)animated {
-	[self.sideMenu openDrawerSide:side animated:animated completion:nil];
+	[self openDrawerSide:side animated:animated completion:nil];
 }
 
 -(void)hideSideMenu:(MMDrawerSide)side animated:(BOOL)animated {
-	[self.sideMenu closeDrawerAnimated:animated completion:nil];
+	[self closeDrawerAnimated:animated completion:nil];
 }
 
 -(void)setControllers:(NSArray*)controllers {
@@ -88,7 +70,7 @@
 }
 
 - (UIViewController *)openedViewController {
-	switch (self.sideMenu.openSide) {
+	switch (self.openSide) {
 		case MMDrawerSideNone:
 			return self.center;
 		case MMDrawerSideLeft:
@@ -103,10 +85,6 @@
 
 - (UIViewController<RNNLayoutProtocol> *)getLeafViewController {
 	return [self.center getLeafViewController];
-}
-
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-	[_presenter present:self.options];
 }
 
 @end

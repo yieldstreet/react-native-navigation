@@ -86,11 +86,6 @@
     [super viewDidLoad];
 }
 
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-	[_presenter present:self.options];
-}
-
-
 #pragma mark RNNParentProtocol
 
 - (UIViewController *)getLeafViewController {

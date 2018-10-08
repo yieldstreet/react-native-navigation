@@ -24,16 +24,9 @@
 
 - (instancetype)initWithLayoutInfo:(RNNLayoutInfo *)layoutInfo rootViewCreator:(id<RNNRootViewCreator>)creator eventEmitter:(RNNEventEmitter *)eventEmitter presenter:(RNNViewControllerPresenter *)presenter options:(RNNNavigationOptions *)options {
 	self = [super init];
-	self.eventEmitter = eventEmitter;
-	self.creator = creator;
+	
 	self.layoutInfo = layoutInfo;
-	self.presenter = presenter;
-	[self.presenter bindViewController:self];
-	self.options = options;
-	self.options.delegate = self;
-	
-	self.animator = [[RNNAnimator alloc] initWithTransitionOptions:self.options.customTransition];
-	
+	self.creator = creator;
 	if (self.creator) {
 		self.view = [creator createRootView:self.layoutInfo.name rootViewId:self.layoutInfo.componentId];
 		[[NSNotificationCenter defaultCenter] addObserver:self
@@ -41,6 +34,15 @@
 													 name: @"RCTContentDidAppearNotification"
 												   object:nil];
 	}
+	
+	self.eventEmitter = eventEmitter;
+	self.presenter = presenter;
+	[self.presenter bindViewController:self];
+	self.options = options;
+	self.options.delegate = self;
+	self.optionsResolver = [[RNNOptionsResolver alloc] initWithOptions:self.options presenter:self.presenter viewController:self];
+	
+	self.animator = [[RNNAnimator alloc] initWithTransitionOptions:self.options.customTransition];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(onJsReload)
@@ -65,7 +67,9 @@
 -(void)viewWillAppear:(BOOL)animated{
 	[super viewWillAppear:animated];
 	_isBeingPresented = YES;
-	[_presenter present:self.options];
+	
+	[_optionsResolver childWillAppearWithOptions:self.options];
+	
 	[self initCustomViews];
 }
 
@@ -82,10 +86,6 @@
 -(void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
 	[self.eventEmitter sendComponentDidDisappear:self.layoutInfo.componentId componentName:self.layoutInfo.name];
-}
-
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-	[_presenter present:self.options];
 }
 
 - (void)optionsDidUpdated {

@@ -54,8 +54,6 @@
 		} else {
 			viewController.edgesForExtendedLayout &= ~UIRectEdgeTop;
 		}
-	} else {
-		viewController.edgesForExtendedLayout = UIRectEdgeAll;
 	}
 	
 	if (self.rightButtons || self.leftButtons) {
@@ -76,14 +74,10 @@
 	
 	if (self.visible) {
 		[navigationController setNavigationBarHidden:![self.visible boolValue] animated:[self.animate boolValue]];
-	} else {
-		[navigationController setNavigationBarHidden:NO animated:NO];
 	}
 	
 	if (self.hideOnScroll) {
 		navigationController.hidesBarsOnSwipe = [self.hideOnScroll boolValue];
-	} else {
-		navigationController.hidesBarsOnSwipe = NO;
 	}
 	
 	if (self.noBorder) {
@@ -98,8 +92,6 @@
 	
 	if (self.barStyle) {
 		navigationController.navigationBar.barStyle = [RCTConvert UIBarStyle:self.barStyle];
-	} else {
-		navigationController.navigationBar.barStyle = UIBarStyleDefault;
 	}
 	
 	[self.background applyOnNavigationController:navigationController];

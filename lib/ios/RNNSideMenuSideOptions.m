@@ -10,14 +10,14 @@
 		if (self.enabled) {
 			switch (side) {
 				case MMDrawerSideRight:
-					sideMenuController.sideMenu.rightSideEnabled = [self.enabled boolValue];
+					sideMenuController.rightSideEnabled = [self.enabled boolValue];
 					break;
 				case MMDrawerSideLeft:
-					sideMenuController.sideMenu.leftSideEnabled = [self.enabled boolValue];
+					sideMenuController.leftSideEnabled = [self.enabled boolValue];
 				default:
 					break;
 			}
-			sideMenuController.sideMenu.openDrawerGestureModeMask = [self.enabled boolValue] ? MMOpenDrawerGestureModeAll : MMOpenDrawerGestureModeNone;
+			sideMenuController.openDrawerGestureModeMask = [self.enabled boolValue] ? MMOpenDrawerGestureModeAll : MMOpenDrawerGestureModeNone;
 		}
 
 		if (self.visible) {
@@ -29,11 +29,11 @@
 		}
 
 		if (self.shouldStretchDrawer) {
-			sideMenuController.sideMenu.shouldStretchDrawer = self.shouldStretchDrawer.boolValue;
+			sideMenuController.shouldStretchDrawer = self.shouldStretchDrawer.boolValue;
 		}
 
 		if (self.animationVelocity) {
-			sideMenuController.sideMenu.animationVelocity = [self.animationVelocity doubleValue];
+			sideMenuController.animationVelocity = [self.animationVelocity doubleValue];
 		}
 
 		MMDrawerControllerDrawerVisualStateBlock animationTypeStateBlock = nil;
@@ -43,16 +43,16 @@
     else if ([self.animationType isEqualToString:@"slide-and-scale"]) animationTypeStateBlock = [MMDrawerVisualState slideAndScaleVisualStateBlock];
 
 		if (animationTypeStateBlock) {
-			[sideMenuController.sideMenu setDrawerVisualStateBlock:animationTypeStateBlock];
+			[sideMenuController setDrawerVisualStateBlock:animationTypeStateBlock];
 		}
 
 		if (self.width) {
 			switch (side) {
 				case MMDrawerSideRight:
-					sideMenuController.sideMenu.maximumRightDrawerWidth = self.width.floatValue;
+					sideMenuController.maximumRightDrawerWidth = self.width.floatValue;
 					break;
 				case MMDrawerSideLeft:
-					sideMenuController.sideMenu.maximumLeftDrawerWidth = self.width.floatValue;
+					sideMenuController.maximumLeftDrawerWidth = self.width.floatValue;
 				default:
 					break;
 			}

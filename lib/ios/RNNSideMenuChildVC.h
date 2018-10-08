@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger, RNNSideMenuChildType) {
 @property (nonatomic, retain) RNNLayoutInfo* layoutInfo;
 @property (nonatomic, retain) RNNBasePresenter* presenter;
 @property (nonatomic, strong) RNNNavigationOptions* options;
+@property (nonatomic, strong) RNNOptionsResolver* optionsResolver;
 
 - (instancetype)initWithLayoutInfo:(RNNLayoutInfo *)layoutInfo childViewControllers:(NSArray *)childViewControllers options:(RNNNavigationOptions *)options presenter:(RNNBasePresenter *)presenter type:(RNNSideMenuChildType)type;
 

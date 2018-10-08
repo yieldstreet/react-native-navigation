@@ -33,9 +33,4 @@
 	return self;
 }
 
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-	[_presenter present:self.options];
-}
-
-
 @end

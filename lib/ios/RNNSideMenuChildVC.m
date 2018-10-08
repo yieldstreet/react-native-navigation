@@ -20,20 +20,23 @@
 - (instancetype)initWithLayoutInfo:(RNNLayoutInfo *)layoutInfo childViewControllers:(NSArray *)childViewControllers options:(RNNNavigationOptions *)options presenter:(RNNBasePresenter *)presenter {
 	self = [super init];
 	
+	self.child = childViewControllers[0];
+	
 	self.presenter = presenter;
 	[self.presenter bindViewController:self];
+	
 	
 	self.options = options;
 	self.layoutInfo = layoutInfo;
 	
-	[self bindChildViewControllers:childViewControllers];
+	self.optionsResolver = [[RNNOptionsResolver alloc] initWithOptions:self.options presenter:self.presenter viewController:self];
 	
+	[self bindChildViewController:self.child];
+
 	return self;
 }
 
-- (void)bindChildViewControllers:(NSArray<UIViewController<RNNParentProtocol> *> *)viewControllers {
-	UIViewController<RNNParentProtocol>* child = viewControllers[0];
-	
+- (void)bindChildViewController:(UIViewController<RNNParentProtocol>*)child {
 	self.child = child;
 	[self addChildViewController:self.child];
 	[self.child.view setFrame:self.view.bounds];
@@ -43,10 +46,6 @@
 
 - (UIViewController *)getLeafViewController {
 	return [self.child getLeafViewController];
-}
-
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-	[_presenter present:self.options];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

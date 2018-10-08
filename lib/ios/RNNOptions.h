@@ -28,6 +28,7 @@
 @property (nonatomic, weak) id<RNNOptionsDelegate> delegate;
 
 - (instancetype)initWithDict:(NSDictionary*)dict;
+- (instancetype)initEmptyOptions;
 - (void)mergeWith:(NSDictionary*)otherOptions;
 - (void)applyOn:(UIViewController *)viewController defaultOptions:(RNNOptions*)defaultOptions;
 - (BOOL)hasProperty:(NSString*)propName;

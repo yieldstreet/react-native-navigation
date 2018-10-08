@@ -26,13 +26,16 @@
 						 presenter:(RNNBasePresenter *)presenter {
 	self = [super init];
 	
-	self.presenter = presenter;
-	[self.presenter bindViewController:self];
 	self.options = options;
 	self.layoutInfo = layoutInfo;
 	
-	[self setViewControllers:childViewControllers];
+	self.presenter = presenter;
+	[self.presenter bindViewController:self];
 	
+	self.optionsResolver = [[RNNOptionsResolver alloc] initWithOptions:self.options presenter:self.presenter viewController:self];
+	
+	[self setViewControllers:childViewControllers];
+		
 	return self;
 }
 
@@ -68,10 +71,6 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
 	return ((UIViewController<RNNParentProtocol>*)self.selectedViewController).preferredStatusBarStyle;
-}
-
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-	[_presenter present:self.options];
 }
 
 #pragma mark UITabBarControllerDelegate
