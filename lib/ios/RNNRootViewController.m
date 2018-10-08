@@ -133,10 +133,13 @@
 }
 
 - (void)initCustomViews {
-	[self setTitleViewWithSubtitle];
 	[self setCustomNavigationTitleView];
 	[self setCustomNavigationBarView];
 	[self setCustomNavigationComponentBackground];
+	
+	if (!_customTitleView) {
+		[self setTitleViewWithSubtitle];
+	}
 }
 
 - (void)setTitleViewWithSubtitle {
