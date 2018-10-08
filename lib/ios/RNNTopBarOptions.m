@@ -60,9 +60,7 @@
 		_navigationButtons = [[RNNNavigationButtons alloc] initWithViewController:(RNNRootViewController*)viewController];
 		[_navigationButtons applyLeftButtons:self.leftButtons rightButtons:self.rightButtons defaultLeftButtonStyle:self.leftButtonStyle defaultRightButtonStyle:self.rightButtonStyle];
 	}
-	
-	[self applyOnNavigationController:viewController.navigationController];
-	
+		
 	self.rightButtons = nil;
 	self.leftButtons = nil;
 }

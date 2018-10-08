@@ -41,7 +41,7 @@
 
 - (void)mergeOptions:(RNNNavigationOptions *)newOptions {
 	[_options mergeOptions:newOptions overrideOptions:YES];
-	[_presenter present:newOptions];
+	[_presenter present:_options];
 	[_options resetOptions];
 	
 	[((UIViewController<RNNParentProtocol> *)_viewController.parentViewController).optionsResolver childDidMergeOptions:newOptions];
