@@ -7,6 +7,11 @@
 	RCTBridge *_bridge;
 }
 
+static UIView * _initialLoadingView;
++(void)setInitialLoadingView:(UIView *)initialLoadingView {
+	_initialLoadingView = initialLoadingView;
+}
+
 -(instancetype)initWithBridge:(RCTBridge*)bridge {
 	self = [super init];
 	
@@ -21,10 +26,14 @@
 		@throw [NSException exceptionWithName:@"MissingViewId" reason:@"Missing view id" userInfo:nil];
 	}
 	
-	UIView *view = [[RNNReactRootView alloc] initWithBridge:_bridge
+	RNNReactRootView *view = [[RNNReactRootView alloc] initWithBridge:_bridge
 										 moduleName:name
 								  initialProperties:@{@"componentId": rootViewId}];
-	return view;
+	if (_initialLoadingView) {
+		view.loadingView = _initialLoadingView;
+		_initialLoadingView = nil;
+	}
+	return (UIView *)view;
 }
 
 - (UIView*)createCustomReactView:(NSString*)name rootViewId:(NSString*)rootViewId {
