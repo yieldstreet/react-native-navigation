@@ -5,6 +5,7 @@
 
 @interface RNNReactRootViewCreator : NSObject <RNNRootViewCreator>
 
++(void)setInitialLoadingView:(UIView *)initialLoadingView;
 -(instancetype)initWithBridge:(RCTBridge*)bridge;
 
 @end
