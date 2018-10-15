@@ -36,7 +36,7 @@ static UIView *_initialLoadingView;
 	RNNReactRootView *view = [[RNNReactRootView alloc] initWithBridge:_bridge
 										 moduleName:name
 								  initialProperties:@{@"componentId": rootViewId}];
-  if (initialLoadingView) {
+  if (_initialLoadingView) {
 		view.initialLoadingView = _initialLoadingView;
 		_initialLoadingView = nil;
 	}
