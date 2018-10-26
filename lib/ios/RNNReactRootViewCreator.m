@@ -48,7 +48,7 @@ static UIView * _initialLoadingView;
 }
 
 -(UIView*)createRootViewFromComponentOptions:(RNNComponentOptions*)componentOptions {
-	return [self createCustomReactView:componentOptions.name rootViewId:componentOptions.componentId];
+	return [self createCustomReactView:componentOptions.name.get rootViewId:componentOptions.componentId.get];
 }
 
 @end

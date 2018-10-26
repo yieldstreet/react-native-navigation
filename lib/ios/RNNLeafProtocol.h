@@ -7,6 +7,6 @@ typedef void (^RNNReactViewReadyCompletionBlock)(void);
 
 - (void)bindViewController:(UIViewController *)viewController;
 
-- (void)mergeAndPresentOptions:(RNNNavigationOptions *)newOptions;
+- (BOOL)isCustomTransitioned;
 
 @end
