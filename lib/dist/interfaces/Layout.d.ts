@@ -81,6 +81,10 @@ export interface LayoutSideMenu {
      * Set the right side bar
      */
     right?: LayoutStackChildren;
+    /**
+     * Set the bottom tabs options
+     */
+    options?: Options;
 }
 export interface LayoutSplitView {
     /**

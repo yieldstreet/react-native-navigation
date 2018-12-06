@@ -41,10 +41,10 @@ export declare class Element extends React.Component<{
         onTouchEndCapture: PropTypes.Validator<((event: import("react-native").GestureResponderEvent) => void) | undefined>;
         accessible: PropTypes.Validator<boolean | undefined>;
         accessibilityLabel: PropTypes.Validator<string | undefined>;
-        accessibilityComponentType: PropTypes.Validator<"button" | "none" | "radiobutton_checked" | "radiobutton_unchecked" | undefined>;
+        accessibilityComponentType: PropTypes.Validator<"none" | "button" | "radiobutton_checked" | "radiobutton_unchecked" | undefined>;
         accessibilityLiveRegion: PropTypes.Validator<"none" | "polite" | "assertive" | undefined>;
         importantForAccessibility: PropTypes.Validator<"auto" | "yes" | "no" | "no-hide-descendants" | undefined>;
-        accessibilityTraits: PropTypes.Validator<"button" | "header" | "link" | "summary" | "image" | "text" | "selected" | "none" | "search" | "plays" | "key" | "disabled" | "frequentUpdates" | "startsMedia" | "adjustable" | "allowsDirectInteraction" | "pageTurn" | import("react-native").AccessibilityTraits[] | undefined>;
+        accessibilityTraits: PropTypes.Validator<"selected" | "image" | "none" | "button" | "link" | "header" | "search" | "plays" | "key" | "text" | "summary" | "disabled" | "frequentUpdates" | "startsMedia" | "adjustable" | "allowsDirectInteraction" | "pageTurn" | import("react-native").AccessibilityTraits[] | undefined>;
         onAcccessibilityTap: PropTypes.Validator<(() => void) | undefined>;
         onMagicTap: PropTypes.Validator<(() => void) | undefined>;
         elementId: PropTypes.Validator<string>;
