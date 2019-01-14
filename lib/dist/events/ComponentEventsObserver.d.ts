@@ -4,7 +4,7 @@ import { ComponentDidAppearEvent, ComponentDidDisappearEvent, NavigationButtonPr
 import { NativeEventsReceiver } from '../adapters/NativeEventsReceiver';
 export declare class ComponentEventsObserver {
     private readonly nativeEventsReceiver;
-    private readonly listeners;
+    private listeners;
     private alreadyRegistered;
     constructor(nativeEventsReceiver: NativeEventsReceiver);
     registerOnceForAllComponentEvents(): void;

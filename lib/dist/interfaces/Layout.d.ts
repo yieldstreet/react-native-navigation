@@ -76,7 +76,7 @@ export interface LayoutSideMenu {
     /**
      * Set the center view
      */
-    center?: Layout;
+    center: Layout;
     /**
      * Set the right side bar
      */
@@ -105,13 +105,45 @@ export interface LayoutSplitView {
      */
     options?: OptionsSplitView;
 }
+export interface TopTabs {
+    /**
+     * Set the layout's id so Navigation.mergeOptions can be used to update options
+     */
+    id?: string;
+    /**
+     * Set the children screens
+     */
+    children?: any[];
+    /**
+     * Configure top tabs
+     */
+    options?: Options;
+}
 export interface LayoutRoot {
     /**
      * Set the root
      */
-    root?: Layout;
+    root: Layout;
     modals?: any;
     overlays?: any;
+}
+export interface ExternalComponent {
+    /**
+     * Set the screen's id so Navigation.mergeOptions can be used to update options
+     */
+    id?: string;
+    /**
+     * Name of your component
+     */
+    name: string | number;
+    /**
+     * Configure component options
+     */
+    options?: Options;
+    /**
+     * Properties to pass down to the component
+     */
+    passProps?: object;
 }
 export interface Layout<P = {}> {
     /**
@@ -134,4 +166,12 @@ export interface Layout<P = {}> {
      * Set the split view
      */
     splitView?: LayoutSplitView;
+    /**
+     * Set the top tabs
+     */
+    topTabs?: TopTabs;
+    /**
+     * Set the external component
+     */
+    externalComponent?: ExternalComponent;
 }

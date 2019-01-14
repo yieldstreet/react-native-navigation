@@ -1,11 +1,13 @@
 import { ComponentProvider } from 'react-native';
-import { ComponentWrapper } from './ComponentWrapper';
 import { Store } from './Store';
 import { ComponentEventsObserver } from '../events/ComponentEventsObserver';
+import { ComponentWrapper } from './ComponentWrapper';
+import { AppRegistryService } from '../adapters/AppRegistryService';
 export declare class ComponentRegistry {
-    private readonly store;
-    private readonly componentEventsObserver;
-    private readonly ComponentWrapperClass;
-    constructor(store: Store, componentEventsObserver: ComponentEventsObserver, ComponentWrapperClass: typeof ComponentWrapper);
-    registerComponent(componentName: string | number, getComponentClassFunc: ComponentProvider, ReduxProvider?: any, reduxStore?: any): ComponentProvider;
+    private store;
+    private componentEventsObserver;
+    private componentWrapper;
+    private appRegistryService;
+    constructor(store: Store, componentEventsObserver: ComponentEventsObserver, componentWrapper: ComponentWrapper, appRegistryService: AppRegistryService);
+    registerComponent(componentName: string | number, componentProvider: ComponentProvider, concreteComponentProvider?: ComponentProvider, ReduxProvider?: any, reduxStore?: any): ComponentProvider;
 }
