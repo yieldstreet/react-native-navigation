@@ -63,7 +63,7 @@ public class CollectionUtils {
 
     public static <T> List<T> merge(@Nullable Collection<T> a, @Nullable Collection<T> b) {
         if (a == null && b == null) return null;
-        List<T> result = new ArrayList<>(get(a));
+        List<T> result = new ArrayList(get(a));
         result.addAll(get(b));
         return result;
     }
@@ -83,7 +83,42 @@ public class CollectionUtils {
         return null;
     }
 
-    private static @NonNull <T> Collection<T> get(@Nullable Collection<T> t) {
+    public static <T> T last(@Nullable List<T> items) {
+        return CollectionUtils.isNullOrEmpty(items) ? null : items.get(items.size() - 1);
+    }
+
+    public static <T> T removeLast(@NonNull List<T> items) {
+        return items.remove(items.size() - 1);
+    }
+
+    public interface Reducer<S, T> {
+        S reduce(T item, S currentValue);
+    }
+
+    public static <S, T> S reduce(Collection<T> items, S initialValue, Reducer<S, T> reducer) {
+        S currentValue = initialValue;
+        for (T item : items) {
+            currentValue = reducer.reduce(item, currentValue);
+        }
+        return currentValue;
+    }
+
+    public static <T> Boolean reduce(@Nullable Collection<T> items, boolean initialValue, Functions.FuncR1<T, Boolean> reducer) {
+        boolean currentValue = initialValue;
+        if (CollectionUtils.isNullOrEmpty(items)) return currentValue;
+        for (T item : items) {
+            currentValue &= reducer.run(item);
+            if (!currentValue) return false;
+        }
+        return currentValue;
+    }
+
+    public static @NonNull <T> Collection<T> get(@Nullable Collection<T> t) {
         return t == null ? Collections.EMPTY_LIST : t;
     }
+
+    public static @NonNull <T> Collection<T> get(@Nullable Map<?, T> t) {
+        return t == null ? Collections.EMPTY_LIST : t.values();
+    }
+
 }
