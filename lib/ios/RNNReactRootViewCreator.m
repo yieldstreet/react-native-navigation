@@ -24,12 +24,14 @@ static UIView * _initialLoadingView;
 		@throw [NSException exceptionWithName:@"MissingViewId" reason:@"Missing view id" userInfo:nil];
 	}
 	
-	UIView *view = [[RNNReactView alloc] initWithBridge:_bridge
+	RNNReactView *view = [[RNNReactView alloc] initWithBridge:_bridge
+											 moduleName:name
+								  initialProperties:@{@"componentId": rootViewId}];
 	if (_initialLoadingView) {
 		view.loadingView = _initialLoadingView;
 		_initialLoadingView = nil;
-	}										 moduleName:name
-								  initialProperties:@{@"componentId": rootViewId}];
+	}
+	
 	return view;
 }
 
