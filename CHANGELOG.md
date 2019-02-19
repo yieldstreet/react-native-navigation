@@ -1,10 +1,75 @@
 # Changelog
+## 2.11.0
+### Fixed
+#### iOS
+* Support updating bottomTab options [#2362655](https://github.com/wix/react-native-navigation/commit/23626556cf9ae4c161993b39776098855117d928) by [rsispal](https://github.com/rsispal)
+
+#### Android
+* Fix android build for RN 0.58.x [#600a1d1](https://github.com/wix/react-native-navigation/commit/600a1d188b634b7834c1720620336dd5d02bfd80) by [alpha0010](https://github.com/alpha0010)
+
+## 2.10.0
+### Added
+#### iOS
+* Add Icon insets support for topBar buttons [#545e5fe](https://github.com/wix/react-native-navigation/commit/545e5fef5fa570aaa20d95bbb40ed9aed72fc480) by [yogevbd](https://github.com/yogevbd)
+* SetRoot wait for render [#5abea28](https://github.com/wix/react-native-navigation/commit/5abea28c53ed34dc822641f30abe2190c08f8185) by [yogevbd](https://github.com/yogevbd)
+
+### Fixed
+#### iOS
+* Improved RNNSplashScreen status bar styling [#b3b88d1](https://github.com/wix/react-native-navigation/commit/b3b88d15bbb730b96de1fa2c0378d0f3c59b53ab) by [danielgindi](https://github.com/danielgindi)
+
+#### Android
+* Null check when parsing strings [#eda4b9c](https://github.com/wix/react-native-navigation/commit/eda4b9ce0a6a9b732241f662012a1e7e5750e193) by [guyca](https://github.com/guyca)
+* Fixed modalDismissed event being emitted with wrong id [#aef7745](https://github.com/wix/react-native-navigation/commit/aef7745cd3a8d9cfce69f9553c8c01b9bdf1cc06) by [guyca](https://github.com/guyca)
+
+## 2.9.0
+### Fixed
+#### iOS
+* Improve SplitView and BottomTabs interactions [#954e734](https://github.com/wix/react-native-navigation/commit/954e7348d78d97477927beb0f1ad3f1e37fedf65) by [zzorba](https://github.com/zzorba)
+* SplitView options are handled by presenter [#00d5e31](https://github.com/wix/react-native-navigation/commit/00d5e313f8992cac5b7fb2301515d8e35e20c2f8) by [zzorba](https://github.com/zzorba)
+* Fixes Large title and noBorder issue which caused color to change to default [#9c48a78](https://github.com/wix/react-native-navigation/commit/9c48a78bc2c01e68e3d9d184f5df637f6b331c53) by [mohammadalijf](https://github.com/mohammadalijf)
+* Pull BottomTabs height from correct controller [#8cee745](https://github.com/wix/react-native-navigation/commit/8cee74533489e1877ffea95c1622bd4ab6fb33ff) by [paubins](https://github.com/paubins)
+
+#### Android
+* Fix custom back button missing id [#578f6a8](https://github.com/wix/react-native-navigation/commit/578f6a8eeac543b64dce5637d6e6e856c5fdda1b) by [guyca](https://github.com/guyca)
+* Fix Android title centering [#4aa5cd1](https://github.com/wix/react-native-navigation/commit/4aa5cd17bfb8a2acad884e2614eef137698b0f5a) by [StasDoskalenko](https://github.com/StasDoskalenko)
+
+
+## 2.8.0
+### Added
+* passProps passed to setStackRoot and showOverlay can specify type with generics [#bc23fba](https://github.com/wix/react-native-navigation/commit/bc23fbad608dc9e38a7f09ff76868867310a4d62) by [henrikra](https://github.com/henrikra)
+* passProps passed to showModal can specify type with generics [#34f37aa](https://github.com/wix/react-native-navigation/commit/34f37aa7c5790e10b3f7db8c5a2af23c6848c6c8) by [ruscoder](https://github.com/ruscoder)
+
+#### Android
+* Bottom tabs attach mode [#740ad3c](https://github.com/wix/react-native-navigation/commit/740ad3c326f29f51205b8f0fb046ff0658076925) by [guyca](https://github.com/guyca)
+
+### Fixed
+#### iOS
+* Fix system & back button color [#57d8ff7](https://github.com/wix/react-native-navigation/commit/57d8ff7858f550ade133422e4a02505ed6378968) by [maryjenel](https://github.com/maryjenel)
+
+## 2.7.1
+### Fixed
+#### Android
+* Fix broken static options provided as objects [#4d82292](https://github.com/wix/react-native-navigation/commit/4d82292950471979cfb6c4016e82665fa29fe9da) by [guyca](https://github.com/guyca)
+
+## 2.7.0
+### Added
+* Adding hideNavBarOnFocusSearchBar option [#83f69d4](https://github.com/wix/react-native-navigation/commit/83f69d4effecfbaaf17af3cebdf8a03b38bfa589) by [sganti564](https://github.com/sganti564)
+
+### Fixed
+* Add missing type interface "waitForRender" [#f1ef49e](https://github.com/wix/react-native-navigation/commit/f1ef49e7aeb63ec17b4165cac9d7e9d0cfe6d48e) by [minhtc](https://github.com/minhtc)
+
+### Android
+* Fix title height not being set on Android [#09c8c37](https://github.com/wix/react-native-navigation/commit/09c8c37e644fa0af2f00a7ec0536d814cddc36fd) by [davrosull](https://github.com/davrosull)
+* Support calling mergeOptions on ExternalComponents [#b1e1ec8](https://github.com/wix/react-native-navigation/commit/b1e1ec84ae5f41693e69da17f7427b59e336fc6a) by [guyca](https://github.com/guyca)
+
 ## 2.6.0
 ### Added
 #### iOS
 * Support iOS system item icons for top bar [#7a26ea9](https://github.com/wix/react-native-navigation/commit/7a26ea956cfce65035ec902ef3f403f178b69317) by [BerndSchrooten](https://github.com/BerndSchrooten)
 
 ### Fixed
+* Road to noImplicitAny part 6 (FINAL part) [#08f8581](https://github.com/wix/react-native-navigation/commit/08f8581b3fbf95967a9cc95de2809316065ee275) by [henrikra](https://github.com/henrikra)
+
 #### Android
 * Fix ScrollView not scrollable in Overlay [#d3ab1ac](https://github.com/wix/react-native-navigation/commit/d3ab1ac526f5829fe74989144130a13d83795ad8) by [guyca](https://github.com/guyca)
 

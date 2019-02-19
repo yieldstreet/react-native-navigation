@@ -1,6 +1,5 @@
 
 #import "RNNReactRootViewCreator.h"
-#import "RNNReactRootView.h"
 #import "RNNReactView.h"
 
 @implementation RNNReactRootViewCreator {
@@ -18,37 +17,28 @@ static UIView * _initialLoadingView;
 	_bridge = bridge;
 	
 	return self;
-	
 }
 
-- (UIView*)createRootView:(NSString*)name rootViewId:(NSString*)rootViewId {
-	if (!rootViewId) {
-		@throw [NSException exceptionWithName:@"MissingViewId" reason:@"Missing view id" userInfo:nil];
-	}
-	
-	RNNReactRootView *view = [[RNNReactRootView alloc] initWithBridge:_bridge
-										 moduleName:name
-								  initialProperties:@{@"componentId": rootViewId}];
-	if (_initialLoadingView) {
-		view.loadingView = _initialLoadingView;
-		_initialLoadingView = nil;
-	}
-	return (UIView *)view;
-}
-
-- (UIView*)createCustomReactView:(NSString*)name rootViewId:(NSString*)rootViewId {
+- (RNNReactView*)createRootView:(NSString*)name rootViewId:(NSString*)rootViewId reactViewReadyBlock:(RNNReactViewReadyCompletionBlock)reactViewReadyBlock {
 	if (!rootViewId) {
 		@throw [NSException exceptionWithName:@"MissingViewId" reason:@"Missing view id" userInfo:nil];
 	}
 	
 	UIView *view = [[RNNReactView alloc] initWithBridge:_bridge
-												 moduleName:name
-										  initialProperties:@{@"componentId": rootViewId}];
+	if (_initialLoadingView) {
+		view.loadingView = _initialLoadingView;
+		_initialLoadingView = nil;
+	}										 moduleName:name
+								  initialProperties:@{@"componentId": rootViewId}];
 	return view;
 }
 
--(UIView*)createRootViewFromComponentOptions:(RNNComponentOptions*)componentOptions {
-	return [self createCustomReactView:componentOptions.name.get rootViewId:componentOptions.componentId.get];
+- (UIView*)createRootViewFromComponentOptions:(RNNComponentOptions*)componentOptions {
+	return [self createRootView:componentOptions.name.get rootViewId:componentOptions.componentId.get reactViewReadyBlock:nil];
+}
+
+- (UIView*)createRootViewFromComponentOptions:(RNNComponentOptions*)componentOptions reactViewReadyBlock:(RNNReactViewReadyCompletionBlock)reactViewReadyBlock {
+	return [self createRootView:componentOptions.name.get rootViewId:componentOptions.componentId.get reactViewReadyBlock:reactViewReadyBlock];
 }
 
 @end
