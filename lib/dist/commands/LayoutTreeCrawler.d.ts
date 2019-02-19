@@ -20,7 +20,7 @@ export declare class LayoutTreeCrawler {
     private handleComponent;
     private savePropsToStore;
     private isComponentWithOptions;
-    private staticOptionsIfPossible;
     private applyStaticOptions;
+    private staticOptionsIfPossible;
     private assertComponentDataName;
 }

@@ -235,6 +235,10 @@ export interface OptionsTopBarButton {
      */
     icon?: ImageRequireSource;
     /**
+    * Set the button icon insets
+    */
+    iconInsets?: IconInsets;
+    /**
      * Set the button as a custom component
      */
     component?: {
@@ -356,6 +360,11 @@ export interface OptionsTopBar {
      */
     searchBarPlaceholder?: string;
     /**
+     * Controls Hiding NavBar on focus UISearchBar
+     * #### (iOS 11+ specific)
+     */
+    hideNavBarOnFocusSearchBar?: boolean;
+    /**
      * Control the Large Title configuration
      * #### (iOS 11+ specific)
      */
@@ -424,6 +433,11 @@ export interface OptionsBottomTabs {
      * Set a background color for the bottom tabs
      */
     backgroundColor?: Color;
+    /**
+     * Set when tabs are attached to hierarchy consequently when the
+     * RootView's constructor is called.
+     */
+    tabsAttachMode?: 'together' | 'afterInitialTab' | 'onSwitchToTab';
     /**
      * Control the Bottom Tabs blur style
      * #### (iOS specific)
@@ -656,6 +670,28 @@ export interface OptionsAnimationProperties {
      * Animate the element over rotation
      */
     rotation?: OptionsAnimationPropertyConfig;
+    /**
+     * Wait for the root view to render before start animation
+     */
+    waitForRender?: boolean;
+}
+export interface IconInsets {
+    /**
+     * Configure top inset
+     */
+    top?: number;
+    /**
+     * Configure left inset
+     */
+    left?: number;
+    /**
+     * Configure bottom inset
+     */
+    bottom?: number;
+    /**
+     * Configure right inset
+     */
+    right?: number;
 }
 export interface OptionsAnimationPropertiesId extends OptionsAnimationProperties {
     /**
@@ -667,16 +703,20 @@ export interface OptionsAnimationSeparate {
     /**
      * Wait for the View to render before start animation
      * Example:
-  ```js
-  animations: {
-    push: {
-      waitForRender: true
-    },
-    showModal: {
-      waitForRender: true
-    }
-  }
-  ```
+     ```js
+     animations: {
+       push: {
+         waitForRender: true
+       },
+       showModal: {
+         waitForRender: true
+       },
+       setRoot: {
+         waitForRender: true
+       }
+       }
+     }
+     ```
      */
     waitForRender?: boolean;
     /**
@@ -780,6 +820,10 @@ export interface Options {
      * Configure the side menu
      */
     sideMenu?: OptionsSideMenu;
+    /**
+     * Configure the splitView controller
+     */
+    splitView?: OptionsSplitView;
     /**
      * Configure the overlay
      */

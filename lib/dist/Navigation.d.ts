@@ -45,7 +45,7 @@ export declare class NavigationRoot {
     /**
      * Show a screen as a modal.
      */
-    showModal(layout: Layout): Promise<any>;
+    showModal<P>(layout: Layout<P>): Promise<any>;
     /**
      * Dismiss a modal by componentId. The dismissed modal can be anywhere in the stack.
      */
@@ -73,11 +73,11 @@ export declare class NavigationRoot {
     /**
      * Sets new root component to stack.
      */
-    setStackRoot(componentId: string, layout: Layout | Layout[]): Promise<any>;
+    setStackRoot<P>(componentId: string, layout: Layout<P> | Array<Layout<P>>): Promise<any>;
     /**
      * Show overlay on top of the entire app
      */
-    showOverlay(layout: Layout): Promise<any>;
+    showOverlay<P>(layout: Layout<P>): Promise<any>;
     /**
      * dismiss overlay by componentId
      */
