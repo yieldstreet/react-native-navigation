@@ -1,20 +1,24 @@
 package com.reactnativenavigation.parse;
 
 import android.graphics.Typeface;
-import android.support.annotation.Nullable;
 
+import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Colour;
+import com.reactnativenavigation.parse.params.NullBool;
 import com.reactnativenavigation.parse.params.NullColor;
 import com.reactnativenavigation.parse.params.NullNumber;
 import com.reactnativenavigation.parse.params.NullText;
 import com.reactnativenavigation.parse.params.Number;
 import com.reactnativenavigation.parse.params.Text;
+import com.reactnativenavigation.parse.parsers.BoolParser;
 import com.reactnativenavigation.parse.parsers.ColorParser;
 import com.reactnativenavigation.parse.parsers.NumberParser;
 import com.reactnativenavigation.parse.parsers.TextParser;
 import com.reactnativenavigation.utils.TypefaceLoader;
 
 import org.json.JSONObject;
+
+import androidx.annotation.Nullable;
 
 public class BottomTabOptions {
 
@@ -30,10 +34,12 @@ public class BottomTabOptions {
         options.selectedIconColor = ColorParser.parse(json, "selectedIconColor");
         options.badge = TextParser.parse(json, "badge");
         options.badgeColor = ColorParser.parse(json, "badgeColor");
+        options.animateBadge = BoolParser.parse(json, "animateBadge");
         options.testId = TextParser.parse(json, "testID");
         options.fontFamily = typefaceManager.getTypeFace(json.optString("fontFamily", ""));
         options.fontSize = NumberParser.parse(json, "fontSize");
         options.selectedFontSize = NumberParser.parse(json, "selectedFontSize");
+        options.dotIndicator = DotIndicatorOptions.parse(json.optJSONObject("dotIndicator"));
         return options;
     }
 
@@ -46,6 +52,8 @@ public class BottomTabOptions {
     public Text testId = new NullText();
     public Text badge = new NullText();
     public Colour badgeColor = new NullColor();
+    public Bool animateBadge = new NullBool();
+    public DotIndicatorOptions dotIndicator = new DotIndicatorOptions();
     public Number fontSize = new NullNumber();
     public Number selectedFontSize = new NullNumber();
     @Nullable public Typeface fontFamily;
@@ -60,10 +68,12 @@ public class BottomTabOptions {
         if (other.selectedIconColor.hasValue()) selectedIconColor = other.selectedIconColor;
         if (other.badge.hasValue()) badge = other.badge;
         if (other.badgeColor.hasValue()) badgeColor = other.badgeColor;
+        if (other.animateBadge.hasValue()) animateBadge = other.animateBadge;
         if (other.testId.hasValue()) testId = other.testId;
         if (other.fontSize.hasValue()) fontSize = other.fontSize;
         if (other.selectedFontSize.hasValue()) selectedFontSize = other.selectedFontSize;
         if (other.fontFamily != null) fontFamily = other.fontFamily;
+        if (other.dotIndicator.hasValue()) dotIndicator = other.dotIndicator;
     }
 
     void mergeWithDefault(final BottomTabOptions defaultOptions) {
@@ -75,9 +85,11 @@ public class BottomTabOptions {
         if (!selectedIconColor.hasValue()) selectedIconColor = defaultOptions.selectedIconColor;
         if (!badge.hasValue()) badge = defaultOptions.badge;
         if (!badgeColor.hasValue()) badgeColor = defaultOptions.badgeColor;
+        if (!animateBadge.hasValue()) animateBadge = defaultOptions.animateBadge;
         if (!fontSize.hasValue()) fontSize = defaultOptions.fontSize;
         if (!selectedFontSize.hasValue()) selectedFontSize = defaultOptions.selectedFontSize;
         if (fontFamily == null) fontFamily = defaultOptions.fontFamily;
         if (!testId.hasValue()) testId = defaultOptions.testId;
+        if (!dotIndicator.hasValue()) dotIndicator = defaultOptions.dotIndicator;
     }
 }

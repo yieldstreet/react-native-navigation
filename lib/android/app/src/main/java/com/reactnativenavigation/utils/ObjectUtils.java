@@ -1,6 +1,6 @@
 package com.reactnativenavigation.utils;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.reactnativenavigation.utils.Functions.Func1;
 import com.reactnativenavigation.utils.Functions.FuncR1;
@@ -16,5 +16,9 @@ public class ObjectUtils {
 
     public static boolean notNull(Object o) {
         return o != null;
+    }
+
+    public static <T> boolean equalsNotNull(@Nullable T a, @Nullable T b) {
+        return a != null && a.equals(b);
     }
 }

@@ -1,9 +1,10 @@
 const React = require('react');
+const { Platform } = require('react-native');
 const Root = require('../components/Root');
 const Button = require('../components/Button');
 const Screens = require('./Screens');
 const Navigation = require('../services/Navigation');
-const {stack, component} = require('../commons/Layouts');
+const { stack, component } = require('../commons/Layouts');
 const {
   PUSH_BTN,
   STACK_SCREEN_HEADER,
@@ -12,7 +13,8 @@ const {
   PUSH_CUSTOM_BACK_BTN,
   CUSTOM_BACK_BTN,
   SEARCH_BTN,
-  SET_STACK_ROOT_BTN
+  SET_STACK_ROOT_BTN,
+  SET_STACK_ROOT_WITH_ID_BTN
 } = require('../testIDs');
 
 class StackScreen extends React.Component {
@@ -39,7 +41,8 @@ class StackScreen extends React.Component {
         <Button label='Pop None Existent Screen' testID={POP_NONE_EXISTENT_SCREEN_BTN} onPress={this.popNoneExistent} />
         <Button label='Push Custom Back Button' testID={PUSH_CUSTOM_BACK_BTN} onPress={this.pushCustomBackButton} />
         <Button label='Set Stack Root' testID={SET_STACK_ROOT_BTN} onPress={this.setStackRoot} />
-        <Button label='Search' testID={SEARCH_BTN} onPress={this.search} />
+        <Button label='Set Stack Root With ID' testID={SET_STACK_ROOT_WITH_ID_BTN} onPress={this.setStackRootWithId} />
+        {Platform.OS === 'ios' && <Button label='Search' testID={SEARCH_BTN} onPress={this.search} />}
       </Root>
     );
   }
@@ -73,6 +76,15 @@ class StackScreen extends React.Component {
     component(Screens.Pushed, { topBar: { title: { text: 'Screen A' } } }),
     component(Screens.Pushed, { topBar: { title: { text: 'Screen B' } } }),
   ]));
+
+  setStackRootWithId = () => Navigation.setStackRoot(this,
+    {
+      component: {
+        id: 'StackRootWithId',
+        name: Screens.Stack
+      }
+    },
+  );
 }
 
 module.exports = StackScreen;

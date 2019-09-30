@@ -6,17 +6,17 @@
 	RCTBridge *_bridge;
 }
 
-static UIView * _initialLoadingView;
-+(void)setInitialLoadingView:(UIView *)initialLoadingView {
-	_initialLoadingView = initialLoadingView;
-}
-
--(instancetype)initWithBridge:(RCTBridge*)bridge {
+- (instancetype)initWithBridge:(RCTBridge*)bridge {
 	self = [super init];
 	
 	_bridge = bridge;
 	
 	return self;
+}
+
+static UIView * _initialLoadingView;
++(void)setInitialLoadingView:(UIView *)initialLoadingView {
+	_initialLoadingView = initialLoadingView;
 }
 
 - (RNNReactView*)createRootView:(NSString*)name rootViewId:(NSString*)rootViewId availableSize:(CGSize)availableSize reactViewReadyBlock:(RNNReactViewReadyCompletionBlock)reactViewReadyBlock {
@@ -25,16 +25,15 @@ static UIView * _initialLoadingView;
 	}
 	
 	RNNReactView *view = [[RNNReactView alloc] initWithBridge:_bridge
-														   moduleName:name
-													initialProperties:@{@"componentId": rootViewId}
-														availableSize:availableSize
-												  reactViewReadyBlock:reactViewReadyBlock];
+												   moduleName:name
+											initialProperties:@{@"componentId": rootViewId}
+												availableSize:availableSize
+										  reactViewReadyBlock:reactViewReadyBlock];
 	if (_initialLoadingView) {
 		view.loadingView = _initialLoadingView;
 		_initialLoadingView = nil;
 	}
-
-	return view;
+	return (UIView *)view;
 }
 
 - (UIView*)createRootViewFromComponentOptions:(RNNComponentOptions*)componentOptions {

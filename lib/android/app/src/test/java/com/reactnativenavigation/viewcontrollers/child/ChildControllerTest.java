@@ -6,7 +6,6 @@ import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.presentation.Presenter;
 import com.reactnativenavigation.viewcontrollers.ChildController;
 import com.reactnativenavigation.viewcontrollers.ChildControllersRegistry;
-import com.reactnativenavigation.viewcontrollers.ParentController;
 
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -50,21 +49,6 @@ public class ChildControllerTest extends BaseTest {
     }
 
     @Test
-    public void applyOptions_applyRootOptionsIfRoot() {
-        newActivity().setContentView(uut.getView());
-        verify(presenter).applyOptions(uut.getView(), resolvedOptions);
-        verify(presenter).applyRootOptions(uut.getView(), resolvedOptions);
-    }
-
-    @Test
-    public void applyOptions_doesNotApplyRootOptionsIfHasParent() {
-        Options options = new Options();
-        uut.setParentController(Mockito.mock(ParentController.class));
-        uut.applyOptions(options);
-        verify(presenter, times(0)).applyRootOptions(uut.getView(), options);
-    }
-
-    @Test
     public void mergeOptions() {
         newActivity().setContentView(uut.getView());
 
@@ -77,5 +61,11 @@ public class ChildControllerTest extends BaseTest {
     public void mergeOptions_emptyOptionsAreIgnored() {
         uut.mergeOptions(Options.EMPTY);
         verify(presenter, times(0)).mergeOptions(any(), any());
+    }
+
+    @Test
+    public void destroy() {
+        uut.destroy();
+        verify(childRegistry).onChildDestroyed(uut);
     }
 }

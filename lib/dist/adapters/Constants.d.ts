@@ -6,7 +6,6 @@ export interface NavigationConstants {
 }
 export declare class Constants {
     static get(): Promise<NavigationConstants>;
-    private static instance;
     readonly statusBarHeight: number;
     readonly backButtonId: string;
     readonly topBarHeight: number;

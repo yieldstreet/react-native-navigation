@@ -1,6 +1,7 @@
 import { EventsRegistry } from './events/EventsRegistry';
 import { ComponentProvider } from 'react-native';
 import { SharedElement } from './adapters/SharedElement';
+import { NavigationConstants } from './adapters/Constants';
 import { TouchablePreview } from './adapters/TouchablePreview';
 import { LayoutRoot, Layout } from './interfaces/Layout';
 import { Options } from './interfaces/Options';
@@ -93,5 +94,5 @@ export declare class NavigationRoot {
     /**
      * Constants coming from native
      */
-    constants(): Promise<any>;
+    constants(): Promise<NavigationConstants>;
 }

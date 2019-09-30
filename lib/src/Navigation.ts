@@ -11,7 +11,7 @@ import { EventsRegistry } from './events/EventsRegistry';
 import { ComponentProvider } from 'react-native';
 import { SharedElement } from './adapters/SharedElement';
 import { CommandsObserver } from './events/CommandsObserver';
-import { Constants } from './adapters/Constants';
+import { Constants, NavigationConstants } from './adapters/Constants';
 import { ComponentEventsObserver } from './events/ComponentEventsObserver';
 import { TouchablePreview } from './adapters/TouchablePreview';
 import { LayoutRoot, Layout } from './interfaces/Layout';
@@ -44,7 +44,7 @@ export class NavigationRoot {
     this.store = new Store();
     this.nativeEventsReceiver = new NativeEventsReceiver();
     this.uniqueIdProvider = new UniqueIdProvider();
-    this.componentEventsObserver = new ComponentEventsObserver(this.nativeEventsReceiver);
+    this.componentEventsObserver = new ComponentEventsObserver(this.nativeEventsReceiver, this.store);
     const appRegistryService = new AppRegistryService();
     this.componentRegistry = new ComponentRegistry(
       this.store,
@@ -200,7 +200,7 @@ export class NavigationRoot {
   /**
    * Constants coming from native
    */
-  public async constants(): Promise<any> {
+  public async constants(): Promise<NavigationConstants> {
     return await Constants.get();
   }
 }
