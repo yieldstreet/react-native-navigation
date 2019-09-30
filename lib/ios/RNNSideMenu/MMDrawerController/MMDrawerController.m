@@ -811,12 +811,12 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
 
 #pragma mark Rotation
 
--(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     //If a rotation begins, we are going to cancel the current gesture and reset transform and anchor points so everything works correctly
     BOOL gestureInProgress = NO;
-    for(UIGestureRecognizer * gesture in self.view.gestureRecognizers){
-        if(gesture.state == UIGestureRecognizerStateChanged){
+    for(UIGestureRecognizer * gesture in self.view.gestureRecognizers) {
+        if(gesture.state == UIGestureRecognizerStateChanged) {
             [gesture setEnabled:NO];
             [gesture setEnabled:YES];
             gestureInProgress = YES;
@@ -825,6 +825,7 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
             [self resetDrawerVisualStateForDrawerSide:self.openSide];
         }
     }
+	
     if ([self needsManualForwardingOfRotationEvents]){
         for(UIViewController * childViewController in self.childViewControllers){
             [childViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
@@ -867,10 +868,11 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
     return YES;
 }
 
--(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+	
     if ([self needsManualForwardingOfRotationEvents]){
-        for(UIViewController * childViewController in self.childViewControllers){
+        for(UIViewController * childViewController in self.childViewControllers) {
             [childViewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
         }
     }

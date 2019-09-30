@@ -68,12 +68,13 @@ Navigation.mergeOptions(this.props.componentId, {
     backgroundColor: 'white',
     orientation: ['portrait', 'landscape'] // An array of supported orientations
   },
-  modalPresentationStyle: 'overCurrentContext', // Supported styles are: 'formSheet', 'pageSheet', 'overFullScreen', 'overCurrentContext', 'currentContext', 'popOver', 'fullScreen' and 'none'. On Android, only overCurrentContext and none are supported.
+  modalPresentationStyle: 'overCurrentContext', // Supported styles are: 'formSheet', 'pageSheet', 'overFullScreen', 'overCurrentContext', 'currentContext', 'popover', 'fullScreen' and 'none'. On Android, only overCurrentContext and none are supported.
   topBar: {
     visible: true,
     animate: false, // Controls whether TopBar visibility changes should be animated
     hideOnScroll: true,
-    buttonColor: 'black',
+    leftButtonColor: 'black',
+    rightButtonColor: 'black',
     drawBehind: false,
     testID: 'topBar',
     title: {
@@ -81,6 +82,7 @@ Navigation.mergeOptions(this.props.componentId, {
       fontSize: 14,
       color: 'red',
       fontFamily: 'Helvetica',
+      fontWeight: 'regular', // Available on iOS only, will ignore fontFamily style and use the iOS system fonts instead. Supported weights are: 'regular', 'bold', 'thin', 'ultraLight', 'light', 'medium', 'semibold', 'heavy' and 'black'.
       component: {
         name: 'example.CustomTopBarTitle',
         alignment: 'center'
@@ -91,6 +93,7 @@ Navigation.mergeOptions(this.props.componentId, {
       fontSize: 14,
       color: 'red',
       fontFamily: 'Helvetica',
+      fontWeight: 'regular', // Available on iOS only, will ignore fontFamily style and use the iOS system fonts instead. Supported weights are: 'regular', 'bold', 'thin', 'ultraLight', 'light', 'medium', 'semibold', 'heavy' and 'black'.
       alignment: 'center'
     },
     backButton: {
@@ -117,6 +120,11 @@ Navigation.mergeOptions(this.props.componentId, {
     text: 'Tab 1',
     badge: '2',
     badgeColor: 'red',
+    dotIndicator: {
+      color: 'green', // default red
+      size: 8, // default 6
+      visible: true // default false
+    }
     testID: 'bottomTabTestID',
     icon: require('tab.png'),
     iconColor: 'red',
@@ -124,6 +132,7 @@ Navigation.mergeOptions(this.props.componentId, {
     textColor: 'red',
     selectedTextColor: 'blue',
     fontFamily: 'Helvetica',
+    fontWeight: 'regular', // Available on iOS only, will ignore fontFamily style and use the iOS system fonts instead. Supported weights are: 'regular', 'bold', 'thin', 'ultraLight', 'light', 'medium', 'semibold', 'heavy' and 'black'.
     fontSize: 10
   },
   sideMenu: {
@@ -140,8 +149,31 @@ Navigation.mergeOptions(this.props.componentId, {
       enabled: true
     }
   },
+  fab: {
+    id: 'fab',  // required
+    backgroundColor: 'green',
+    clickColor: 'blue',
+    rippleColor: 'yellow',
+    visible: true,
+    icon: require('add.png'),
+    iconColor: 'white',
+    alignHorizontally: 'left', // one of 'left', 'right'
+    hideOnScroll: false,
+    size: 24,
+    actions: [{
+      id: 'fab-1',  // required
+      backgroundColor: 'green',
+      clickColor: 'blue',
+      rippleColor: 'yellow'
+      visible: true,
+      icon: require('add.png'),
+      iconColor: 'white',
+      size: 24;
+    }];
+  },
   overlay: {
-    interceptTouchOutside: true
+    interceptTouchOutside: true,
+    handleKeyboardEvents: true
   },
   preview: {
     reactTag: 0, // result from findNodeHandle(ref)
@@ -187,7 +219,8 @@ Navigation.mergeOptions(this.props.componentId, {
       visible: true,
       fontSize: 30,
       color: 'red',
-      fontFamily: 'Helvetica'
+      fontFamily: 'Helvetica',
+      fontWeight: 'regular' // Available on iOS only, will ignore fontFamily style and use the iOS system fonts instead. Supported weights are: 'regular', 'bold', 'thin', 'ultraLight', 'light', 'medium', 'semibold', 'heavy' and 'black'.
     },
   },
   sideMenu: {
@@ -286,12 +319,12 @@ If you'd like to use a custom font, you'll first have to edit your project.
 
 ## Custom tab icons
 
-* Android - add cooresponding resoltion icons into folders in android/app/src/main/res.
-For example, icon_name.png in each drawable-x folder.
-* iOS - drag and drop to Images.xcassets in Xcode.
-For example, image set icon_name in Images.xcassets with x1, x2, x3.
+* Android - add corresponding resolution icons into folders in `android/app/src/main/res`.
+For example, `icon_name.png` in each drawable-x folder.
+* iOS - drag and drop to `Images.xcassets` in Xcode.
+For example, image set `icon_name` in `Images.xcassets` with x1, x2, x3.
 
-Then, the tab icon can be defined by following syntax:
+Then, the tab icon can be defined with the following syntax:
 
 ```js
 bottomTab: {

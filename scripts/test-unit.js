@@ -13,8 +13,12 @@ function run() {
 }
 
 function runAndroidUnitTests() {
-  const conf = release ? 'testReactNative57_5ReleaseUnitTest' : 'testReactNative57_5DebugUnitTest';
-
+  const conf = release ? 'testReactNative60ReleaseUnitTest' : 'testReactNative60DebugUnitTest';
+  if (android && process.env.JENKINS_CI) {
+    const sdkmanager = '/usr/local/share/android-sdk/tools/bin/sdkmanager';
+    exec.execSync(`yes | ${sdkmanager} --licenses`);
+    // exec.execSync(`echo y | ${sdkmanager} --update && echo y | ${sdkmanager} --licenses`);
+  }
   exec.execSync(`cd lib/android && ./gradlew ${conf}`);
 }
 
@@ -28,7 +32,7 @@ function runIosUnitTests() {
             -project playground.xcodeproj
             -sdk iphonesimulator
             -configuration ${conf}
-            -derivedDataPath ./DerivedData/playground
+            -derivedDataPath ./playground/ios/DerivedData/playground
             -quiet
             -UseModernBuildSystem=NO
             ONLY_ACTIVE_ARCH=YES`);
@@ -40,8 +44,8 @@ function runIosUnitTests() {
             -project playground.xcodeproj
             -sdk iphonesimulator
             -configuration ${conf}
-            -destination 'platform=iOS Simulator,name=iPhone X'
-            -derivedDataPath ./DerivedData/playground
+            -destination 'platform=iOS Simulator,name=iPhone 11'
+            -derivedDataPath ./playground/ios/DerivedData/playground
             ONLY_ACTIVE_ARCH=YES`);
 }
 

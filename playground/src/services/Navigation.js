@@ -2,7 +2,7 @@ const { isString, get } = require('lodash');
 const { stack, component } = require('../commons/Layouts');
 const { Navigation } = require('react-native-navigation');
 
-const push = (selfOrCompId, screen) => Navigation.push(compId(selfOrCompId), isString(screen) ? component(screen) : screen);
+const push = (selfOrCompId, screen, options) => Navigation.push(compId(selfOrCompId), isString(screen) ? component(screen, options) : screen);
 
 const pushExternalComponent = (self, name, passProps) => Navigation.push(self.props.componentId, {
   externalComponent: {
@@ -13,7 +13,7 @@ const pushExternalComponent = (self, name, passProps) => Navigation.push(self.pr
 
 const pop = (selfOrCompId) => Navigation.pop(compId(selfOrCompId));
 
-const showModal = (screen) => Navigation.showModal(isString(screen) ? stack(screen) : screen);
+const showModal = (screen, options) => Navigation.showModal(isString(screen) ? stack(component(screen, options)) : screen);
 
 const dismissModal = (selfOrCompId) => Navigation.dismissModal(compId(selfOrCompId));
 
@@ -25,13 +25,17 @@ const dismissOverlay = (name) => Navigation.dismissOverlay(name);
 
 const popToRoot = (self) => Navigation.popToRoot(self.props.componentId);
 
-const mergeOptions = (self, options) => Navigation.mergeOptions(self.props.componentId, options);
+const mergeOptions = (selfOrCompId, options) => Navigation.mergeOptions(compId(selfOrCompId), options);
 
-const setStackRoot = (self, root) => Navigation.setStackRoot(self.props.componentId, root)
+const setStackRoot = (self, root) => Navigation.setStackRoot(self.props.componentId, root);
+
+const setRoot = (root) => Navigation.setRoot(root.root ? root : { root: component(root, {}) });
 
 const compId = (selfOrCompId) => {
   return get(selfOrCompId, 'props.componentId', selfOrCompId);
 }
+
+const constants = Navigation.constants;
 
 module.exports = {
   mergeOptions,
@@ -47,6 +51,8 @@ module.exports = {
   events: Navigation.events.bind(Navigation),
   popTo: Navigation.popTo.bind(Navigation),
   setDefaultOptions: Navigation.setDefaultOptions.bind(Navigation),
-  setRoot: Navigation.setRoot.bind(Navigation),
-  setStackRoot
+  setRoot,
+  TouchablePreview: Navigation.TouchablePreview,
+  setStackRoot,
+  constants
 }
