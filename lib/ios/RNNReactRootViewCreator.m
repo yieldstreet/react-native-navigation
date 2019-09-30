@@ -14,6 +14,11 @@
 	return self;
 }
 
+static UIView * _initialLoadingView;
++(void)setInitialLoadingView:(UIView *)initialLoadingView {
+	_initialLoadingView = initialLoadingView;
+}
+
 - (RNNReactView*)createRootView:(NSString*)name rootViewId:(NSString*)rootViewId availableSize:(CGSize)availableSize reactViewReadyBlock:(RNNReactViewReadyCompletionBlock)reactViewReadyBlock {
 	if (!rootViewId) {
 		@throw [NSException exceptionWithName:@"MissingViewId" reason:@"Missing view id" userInfo:nil];
@@ -24,7 +29,11 @@
 											initialProperties:@{@"componentId": rootViewId}
 												availableSize:availableSize
 										  reactViewReadyBlock:reactViewReadyBlock];
-	return view;
+	if (_initialLoadingView) {
+		view.loadingView = _initialLoadingView;
+		_initialLoadingView = nil;
+	}
+	return (UIView *)view;
 }
 
 - (UIView*)createRootViewFromComponentOptions:(RNNComponentOptions*)componentOptions {
