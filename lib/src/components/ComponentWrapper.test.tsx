@@ -179,7 +179,7 @@ describe('ComponentWrapper', () => {
     const ConnectedComp = require('react-redux').connect(mapStateToProps)(MyReduxComp);
     const ReduxProvider = require('react-redux').Provider;
     const initialState: RootState = { txt: 'it just works' };
-    const reduxStore = require('redux').createStore((state = initialState) => state);
+    const reduxStore = require('redux').createStore((state: RootState = initialState) => state);
 
     it(`wraps the component with a react-redux provider with passed store`, () => {
       const NavigationComponent = uut.wrap(componentName, () => ConnectedComp, store, componentEventsObserver, undefined, ReduxProvider, reduxStore);
